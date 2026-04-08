@@ -176,7 +176,7 @@ public class TestService : ITestService
     /// Submits a test attempt and calculates the score.
     /// </summary>
     public async Task<(int score, int grade, IEnumerable<StudentAnswerViewModel> answers)> SubmitTestAsync(
-        int testId, int studentId, IDictionary<int, int> selectedAnswerIds)
+        int testId, int studentId, IReadOnlyDictionary<int, int> selectedAnswerIds)
     {
         var test = await _context.Tests
             .Include(t => t.Questions)

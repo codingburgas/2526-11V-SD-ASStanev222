@@ -6,6 +6,7 @@ using ProjectLMS.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 // Add Entity Framework Core
@@ -35,6 +36,9 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages()
    .WithStaticAssets();
 
