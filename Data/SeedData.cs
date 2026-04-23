@@ -32,9 +32,9 @@ public static class SeedData
             await roleManager.CreateAsync(new IdentityRole("Student"));
 
         // Create users if they don't exist
-        IdentityUser adminUser = null;
-        IdentityUser teacherUser = null;
-        IdentityUser studentUser = null;
+        IdentityUser? adminUser = null;
+        IdentityUser? teacherUser = null;
+        IdentityUser? studentUser = null;
 
         if (await userManager.FindByEmailAsync("admin@lms.com") == null)
         {

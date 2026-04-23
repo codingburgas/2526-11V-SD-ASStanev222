@@ -51,7 +51,7 @@ public class LessonService : ILessonService
             .FirstOrDefaultAsync(l => l.Id == id);
 
         if (lesson == null)
-            return null;
+            throw new InvalidOperationException("Lesson not found.");
 
         return new LessonViewModel
         {

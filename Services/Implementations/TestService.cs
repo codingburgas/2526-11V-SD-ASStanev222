@@ -52,7 +52,7 @@ public class TestService : ITestService
             .FirstOrDefaultAsync(t => t.Id == id);
 
         if (test == null)
-            return null;
+            throw new InvalidOperationException("Test not found.");
 
         return new TestViewModel
         {
@@ -137,7 +137,7 @@ public class TestService : ITestService
             .FirstOrDefaultAsync(t => t.Id == testId);
 
         if (test == null)
-            return null;
+            throw new InvalidOperationException("Test not found.");
 
         // Check if student is enrolled in the course
         var isEnrolled = await _context.Enrollments

@@ -52,7 +52,7 @@ public class CourseService : ICourseService
             .FirstOrDefaultAsync(c => c.Id == id);
 
         if (course == null)
-            return null;
+            throw new InvalidOperationException("Course not found.");
 
         return new CourseViewModel
         {
