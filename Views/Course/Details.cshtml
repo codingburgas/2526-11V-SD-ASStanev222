@@ -1,0 +1,113 @@
+@model ProjectLMS.Models.ViewModels.CourseViewModel
+@{
+    ViewData["Title"] = "Course Details - " + Model.Title;
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1 class="h4 mb-0">@Model.Title</h1>
+                <div>
+                    <a asp-controller="Course" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                    <a asp-controller="Course" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="lead">@Model.Description</p>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Created on:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Enrolled students:</strong> @Model.EnrolledStudentCount
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Enrolled students:</strong> @Model.EnrolledStudentCount
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Status:</strong>
+                        <span class="badge bg-success">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Course Content</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="d-grid">
+                            <a asp-controller="Lesson" asp-action="Index" asp-route-courseId="@Model.Id" class="btn btn-outline-primary">
+                                <i class="bi bi-journal-text"></i>
+                                <br>
+                                <strong>Lessons</strong>
+                                <br>
+                                <small>View course lessons</small>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-grid">
+                            <a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.Id" class="btn btn-outline-success">
+                                <i class="bi bi-check-circle"></i>
+                                <br>
+                                <strong>Tests</strong>
+                                <br>
+                                <small>Take course tests</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Enrollment</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-controller="Course" asp-action="Enroll" asp-route-courseId="@Model.Id">
+                    @Html.AntiForgeryToken()
+                    <p>Enroll in this course to access all lessons and tests.</p>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-person-plus"></i> Enroll Now
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Statistics</h5>
+            </div>
+            <div class="card-body">
+                <a asp-controller="Statistics" asp-action="Course" asp-route-courseId="@Model.Id" class="btn btn-outline-info w-100">
+                    <i class="bi bi-graph-up"></i> View Course Statistics
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a asp-controller="Lesson" asp-action="Create" asp-route-courseId="@Model.Id" class="btn btn-outline-primary btn-sm">Add Lesson</a>
+                    <a asp-controller="Test" asp-action="Create" asp-route-courseId="@Model.Id" class="btn btn-outline-success btn-sm">Add Test</a>
+                    <a asp-controller="Course" asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to Courses</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

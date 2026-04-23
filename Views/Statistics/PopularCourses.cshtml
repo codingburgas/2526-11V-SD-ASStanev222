@@ -1,0 +1,64 @@
+@{
+    ViewData["Title"] = "Popular Courses";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Popular Courses</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Statistics" asp-action="Index">Statistics</a></li>
+                <li class="breadcrumb-item active">Popular Courses</li>
+            </ol>
+        </nav>
+    </div>
+    <div>
+        <span class="badge bg-info">Top @(ViewBag.TopCount ?? 10) Courses</span>
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var course in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-primary">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">@course.Title</h6>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-trophy-fill me-1"></i>
+                            <span class="badge bg-light text-dark">@course.EnrolledStudentCount students</span>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="card-text">@course.Description</p>
+                        <div class="mt-auto">
+                            <small class="text-muted d-block mb-2">
+                                <i class="bi bi-person"></i> Created by @course.CreatedByUserName
+                            </small>
+                            <div class="d-flex gap-2">
+                                <a asp-controller="Course" asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary btn-sm">View Course</a>
+                                <a asp-controller="Statistics" asp-action="Course" asp-route-id="@course.Id" class="btn btn-outline-info btn-sm">Statistics</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="bi bi-trophy display-1 text-muted"></i>
+        <h3 class="mt-3">No popular courses yet</h3>
+        <p class="text-muted">Courses will appear here as students enroll.</p>
+        <a asp-controller="Course" asp-action="Index" class="btn btn-primary">Browse All Courses</a>
+    </div>
+}
+
+<div class="mt-4">
+    <a asp-controller="Statistics" asp-action="Index" class="btn btn-outline-secondary">Back to Statistics</a>
+    <a asp-controller="Course" asp-action="Index" class="btn btn-outline-primary ms-2">Browse All Courses</a>
+</div>

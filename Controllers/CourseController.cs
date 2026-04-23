@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectLMS.Models.ViewModels;
 using ProjectLMS.Services.Interfaces;
+using System.Security.Claims;
 
 namespace ProjectLMS.Controllers;
 
@@ -61,8 +62,8 @@ public class CourseController : Controller
     {
         if (ModelState.IsValid)
         {
-            // TODO: Get current user ID from authentication
-            courseViewModel.CreatedByUserId = 1; // Temporary: Admin user
+            // Get current user ID from authentication
+            courseViewModel.CreatedByUserId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "1";
 
             await _courseService.CreateCourseAsync(courseViewModel);
             return RedirectToAction(nameof(Index));
@@ -162,9 +163,13 @@ public class CourseController : Controller
     {
         try
         {
-            // TODO: Get current student ID from authentication
-            int studentId = 2; // Temporary: Student user
-            await _courseService.EnrollStudentAsync(courseId, studentId);
+            // Get current user ID from authentication
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            await _courseService.EnrollStudentAsync(courseId, userId);
             TempData["Success"] = "Successfully enrolled in the course!";
         }
         catch (InvalidOperationException ex)

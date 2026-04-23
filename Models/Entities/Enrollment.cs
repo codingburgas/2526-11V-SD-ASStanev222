@@ -10,15 +10,12 @@ namespace ProjectLMS.Models.Entities;
 public class Enrollment : BaseEntity
 {
     [Required]
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     [Required]
     public int CourseId { get; set; }
 
-    // Foreign key references
-    [ForeignKey("UserId")]
-    public User User { get; set; }
-
+    // Foreign key reference
     [ForeignKey("CourseId")]
     public Course Course { get; set; }
 

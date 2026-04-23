@@ -1,0 +1,61 @@
+@model ProjectLMS.Models.ViewModels.LessonViewModel
+@{
+    ViewData["Title"] = "Delete Lesson - " + Model.Title;
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Index">Courses</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Details" asp-route-id="@Model.CourseId">@Model.CourseName</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Lesson" asp-action="Index" asp-route-courseId="@Model.CourseId">Lessons</a></li>
+                <li class="breadcrumb-item active">Delete @Model.Title</li>
+            </ol>
+        </nav>
+
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h1 class="h4 mb-0">
+                    <i class="bi bi-exclamation-triangle"></i> Delete Lesson
+                </h1>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <strong>Warning!</strong> This action cannot be undone. This will permanently delete the lesson.
+                </div>
+
+                <h5>Lesson Details:</h5>
+                <dl class="row">
+                    <dt class="col-sm-3">Title:</dt>
+                    <dd class="col-sm-9">@Model.Title</dd>
+
+                    <dt class="col-sm-3">Course:</dt>
+                    <dd class="col-sm-9">@Model.CourseName</dd>
+
+                    <dt class="col-sm-3">Order:</dt>
+                    <dd class="col-sm-9">@Model.Order</dd>
+
+                    <dt class="col-sm-3">Content:</dt>
+                    <dd class="col-sm-9">
+                        <div class="border p-2 bg-light rounded">
+                            @Html.Raw(Model.Content?.Length > 100 ? Model.Content.Substring(0, 100) + "..." : Model.Content)
+                        </div>
+                    </dd>
+                </dl>
+
+                <form method="post" action="/Lesson/Delete/@Model.Id">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="Id" value="@Model.Id" />
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Yes, Delete Lesson
+                        </button>
+                        <a asp-controller="Lesson" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

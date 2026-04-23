@@ -42,7 +42,6 @@ public class StatisticsService : IStatisticsService
     public async Task<IEnumerable<CourseViewModel>> GetCoursesWithMostEnrollmentsAsync(int top)
     {
         return await _context.Courses
-            .Include(c => c.CreatedByUser)
             .Include(c => c.Enrollments)
             .Include(c => c.Lessons)
             .OrderByDescending(c => c.Enrollments.Count)
@@ -53,7 +52,6 @@ public class StatisticsService : IStatisticsService
                 Title = c.Title,
                 Description = c.Description,
                 CreatedByUserId = c.CreatedByUserId,
-                CreatedByUserName = c.CreatedByUser.Name,
                 CreatedAt = c.CreatedAt,
                 LessonCount = c.Lessons.Count,
                 EnrolledStudentCount = c.Enrollments.Count
@@ -64,19 +62,15 @@ public class StatisticsService : IStatisticsService
     /// <summary>
     /// Gets comprehensive progress information for a student.
     /// </summary>
-    public async Task<StudentProgressViewModel> GetStudentProgressAsync(int studentId)
+    public async Task<StudentProgressViewModel> GetStudentProgressAsync(string userId)
     {
-        var student = await _context.Users.FindAsync(studentId);
-        if (student == null)
-            throw new KeyNotFoundException("Student not found");
-
         // Get all enrollments for the student
         var enrollments = await _context.Enrollments
             .Include(e => e.Course)
                 .ThenInclude(c => c.Lessons)
             .Include(e => e.Course)
                 .ThenInclude(c => c.Tests)
-            .Where(e => e.UserId == studentId)
+            .Where(e => e.UserId == userId)
             .ToListAsync();
 
         var courseProgressList = new List<CourseProgressViewModel>();
@@ -88,7 +82,7 @@ public class StatisticsService : IStatisticsService
             // Get test results for this course
             var testAttempts = await _context.StudentTestAttempts
                 .Include(sta => sta.Test)
-                .Where(sta => sta.UserId == studentId && sta.Test.CourseId == course.Id)
+                .Where(sta => sta.UserId == userId && sta.Test.CourseId == course.Id)
                 .ToListAsync();
 
             var testResults = testAttempts.Select(sta => new TestResultViewModel
@@ -120,16 +114,16 @@ public class StatisticsService : IStatisticsService
 
         // Calculate overall statistics
         var allTestAttempts = await _context.StudentTestAttempts
-            .Where(sta => sta.UserId == studentId)
+            .Where(sta => sta.UserId == userId)
             .ToListAsync();
 
         var overallAverageGrade = allTestAttempts.Any() ? allTestAttempts.Average(sta => sta.ConvertToGrade()) : 0;
 
         return new StudentProgressViewModel
         {
-            UserId = student.Id,
-            StudentName = student.Name,
-            Email = student.Email,
+            UserId = userId,
+            StudentName = "Student", // TODO: Get from Identity
+            Email = "student@lms.com", // TODO: Get from Identity
             EnrolledCoursesCount = enrollments.Count,
             CourseProgress = courseProgressList,
             OverallAverageGrade = overallAverageGrade,

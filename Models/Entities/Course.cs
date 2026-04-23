@@ -20,11 +20,7 @@ public class Course : BaseEntity
     public string Description { get; set; }
 
     [Required]
-    public int CreatedByUserId { get; set; }
-
-    // Foreign key reference
-    [ForeignKey("CreatedByUserId")]
-    public User CreatedByUser { get; set; }
+    public string CreatedByUserId { get; set; }
 
     // Navigation properties
     public ICollection<Lesson> Lessons { get; set; } = new List<Lesson>();

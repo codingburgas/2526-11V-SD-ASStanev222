@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProjectLMS.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjectLMS.Data;
 
@@ -8,7 +10,7 @@ namespace ProjectLMS.Data;
 /// Configures all entities, relationships, and database constraints.
 /// Follows code-first approach with fluent API configuration.
 /// </summary>
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
@@ -16,7 +18,6 @@ public class ApplicationDbContext : DbContext
     }
 
     // DbSets for all entities
-    public DbSet<User> Users { get; set; }
     public DbSet<Course> Courses { get; set; }
     public DbSet<Lesson> Lessons { get; set; }
     public DbSet<Test> Tests { get; set; }
@@ -42,23 +43,10 @@ public class ApplicationDbContext : DbContext
             .HasKey(e => new { e.UserId, e.CourseId });
 
         modelBuilder.Entity<Enrollment>()
-            .HasOne(e => e.User)
-            .WithMany(u => u.Enrollments)
-            .HasForeignKey(e => e.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<Enrollment>()
             .HasOne(e => e.Course)
             .WithMany(c => c.Enrollments)
             .HasForeignKey(e => e.CourseId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        // ===== USER - COURSE RELATIONSHIP (CreatedByUser) =====
-        modelBuilder.Entity<Course>()
-            .HasOne(c => c.CreatedByUser)
-            .WithMany(u => u.CreatedCourses)
-            .HasForeignKey(c => c.CreatedByUserId)
-            .OnDelete(DeleteBehavior.Restrict);
 
         // ===== COURSE - LESSON RELATIONSHIP (One-to-Many) =====
         modelBuilder.Entity<Lesson>()
@@ -93,12 +81,6 @@ public class ApplicationDbContext : DbContext
             .HasOne(sta => sta.Test)
             .WithMany(t => t.StudentAttempts)
             .HasForeignKey(sta => sta.TestId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<StudentTestAttempt>()
-            .HasOne(sta => sta.User)
-            .WithMany()
-            .HasForeignKey(sta => sta.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // ===== STUDENT ANSWER RELATIONSHIPS =====

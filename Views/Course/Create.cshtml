@@ -1,0 +1,40 @@
+@model ProjectLMS.Models.ViewModels.CourseViewModel
+@{
+    ViewData["Title"] = "Create Course";
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h4 mb-0">Create New Course</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label for="Title" class="form-label">Course Title</label>
+                        <input type="text" class="form-control" id="Title" name="Title"
+                               value="@Model?.Title" required maxlength="200">
+                        @Html.ValidationMessage("Title", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="Description" class="form-label">Description</label>
+                        <textarea class="form-control" id="Description" name="Description"
+                                  rows="4" maxlength="1000">@Model?.Description</textarea>
+                        @Html.ValidationMessage("Description", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Create Course
+                        </button>
+                        <a asp-controller="Course" asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

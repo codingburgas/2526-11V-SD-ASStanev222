@@ -11,7 +11,7 @@ namespace ProjectLMS.Models.Entities;
 public class StudentTestAttempt : BaseEntity
 {
     [Required]
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     [Required]
     public int TestId { get; set; }
@@ -34,9 +34,6 @@ public class StudentTestAttempt : BaseEntity
             _ => 2  // Fail grade
         };
     }
-
-    [ForeignKey("UserId")]
-    public User User { get; set; }
 
     [ForeignKey("TestId")]
     public Test Test { get; set; }

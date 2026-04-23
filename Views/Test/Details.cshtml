@@ -1,0 +1,90 @@
+@model ProjectLMS.Models.ViewModels.TestViewModel
+@{
+    ViewData["Title"] = "Test Details - " + Model.Title;
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Index">Courses</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Details" asp-route-id="@Model.CourseId">@Model.CourseName</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.CourseId">Tests</a></li>
+                <li class="breadcrumb-item active">@Model.Title</li>
+            </ol>
+        </nav>
+
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1 class="h4 mb-0">@Model.Title</h1>
+                <div>
+                    <a asp-controller="Test" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                    <a asp-controller="Test" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                </div>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    <p class="lead">@Model.Description</p>
+                }
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Course:</strong> @Model.CourseName
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Passing Score:</strong> @Model.PassingScore%
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Questions:</strong> @Model.Questions?.Count ?? 0
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Created:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Questions != null && Model.Questions.Any())
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Questions</h5>
+                </div>
+                <div class="card-body">
+                    @for (int i = 0; i < Model.Questions.Count; i++)
+                    {
+                        var question = Model.Questions[i];
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">Question @(i + 1) <small class="text-muted">(@question.Points points)</small></h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-2">@question.QuestionText</p>
+                                @if (question.Answers != null && question.Answers.Any())
+                                {
+                                    <ul class="list-group">
+                                        @foreach (var answer in question.Answers)
+                                        {
+                                            <li class="list-group-item">@answer.AnswerText</li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="mt-4">
+            <a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-outline-secondary">Back to Tests</a>
+            <a asp-controller="Test" asp-action="Take" asp-route-id="@Model.Id" class="btn btn-success ms-2">
+                <i class="bi bi-play-circle"></i> Take Test
+            </a>
+        </div>
+    </div>
+</div>

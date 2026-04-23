@@ -1,0 +1,79 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4 class="mb-0">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Login to ProjectLMS
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form asp-controller="Account" asp-action="Login" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label"></label>
+                                <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Password" class="form-label"></label>
+                                <input asp-for="Password" class="form-control" placeholder="Enter your password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input asp-for="RememberMe" class="form-check-input" />
+                                <label asp-for="RememberMe" class="form-check-label">
+                                    Remember me
+                                </label>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                                </button>
+                            </div>
+                        </form>
+
+                        <hr class="my-4">
+
+                        <div class="text-center">
+                            <p class="mb-2">Don't have an account?</p>
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary">
+                                <i class="bi bi-person-plus me-2"></i>Create Account
+                            </a>
+                        </div>
+
+                        <div class="mt-4 p-3 bg-light rounded">
+                            <h6 class="text-muted mb-2">Demo Accounts:</h6>
+                            <small class="text-muted">
+                                <strong>Admin:</strong> admin@lms.com / password<br>
+                                <strong>Student:</strong> student1@lms.com / password<br>
+                                <strong>Teacher:</strong> teacher1@lms.com / password
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Auto-fill demo account on page load for testing
+        document.addEventListener('DOMContentLoaded', function() {
+            // Uncomment to auto-fill admin account for testing
+            // document.querySelector('input[name="Email"]').value = 'admin@lms.com';
+            // document.querySelector('input[name="Password"]').value = 'password';
+        });
+    </script>
+}

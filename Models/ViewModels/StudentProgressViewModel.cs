@@ -10,7 +10,7 @@ namespace ProjectLMS.Models.ViewModels;
 /// </summary>
 public class StudentProgressViewModel
 {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     public string StudentName { get; set; }
     public string Email { get; set; }
 
@@ -54,5 +54,6 @@ public class TestResultViewModel
     public int Score { get; set; }
     public int Grade { get; set; }
     public bool IsPassed { get; set; }
+    public string Feedback { get; set; }
     public DateTime AttemptedAt { get; set; }
 }

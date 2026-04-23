@@ -10,6 +10,6 @@ public interface ICourseService
     Task CreateCourseAsync(CourseViewModel course);
     Task UpdateCourseAsync(CourseViewModel course);
     Task DeleteCourseAsync(int id);
-    Task EnrollStudentAsync(int courseId, int studentId);
+    Task EnrollStudentAsync(int courseId, string userId);
     Task<IEnumerable<CourseViewModel>> GetPopularCoursesAsync(int top);
 }

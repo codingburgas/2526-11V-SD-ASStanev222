@@ -25,7 +25,6 @@ public class CourseService : ICourseService
     public async Task<IEnumerable<CourseViewModel>> GetAllCoursesAsync()
     {
         return await _context.Courses
-            .Include(c => c.CreatedByUser)
             .Include(c => c.Enrollments)
             .Include(c => c.Lessons)
             .Select(c => new CourseViewModel
@@ -34,7 +33,6 @@ public class CourseService : ICourseService
                 Title = c.Title,
                 Description = c.Description,
                 CreatedByUserId = c.CreatedByUserId,
-                CreatedByUserName = c.CreatedByUser.Name,
                 CreatedAt = c.CreatedAt,
                 LessonCount = c.Lessons.Count,
                 EnrolledStudentCount = c.Enrollments.Count
@@ -48,7 +46,6 @@ public class CourseService : ICourseService
     public async Task<CourseViewModel> GetCourseByIdAsync(int id)
     {
         var course = await _context.Courses
-            .Include(c => c.CreatedByUser)
             .Include(c => c.Enrollments)
             .Include(c => c.Lessons)
             .Include(c => c.Tests)
@@ -63,7 +60,6 @@ public class CourseService : ICourseService
             Title = course.Title,
             Description = course.Description,
             CreatedByUserId = course.CreatedByUserId,
-            CreatedByUserName = course.CreatedByUser.Name,
             CreatedAt = course.CreatedAt,
             LessonCount = course.Lessons.Count,
             EnrolledStudentCount = course.Enrollments.Count
@@ -117,11 +113,11 @@ public class CourseService : ICourseService
     /// <summary>
     /// Enrolls a student in a course.
     /// </summary>
-    public async Task EnrollStudentAsync(int courseId, int studentId)
+    public async Task EnrollStudentAsync(int courseId, string userId)
     {
         // Check if already enrolled
         var existingEnrollment = await _context.Enrollments
-            .FirstOrDefaultAsync(e => e.CourseId == courseId && e.UserId == studentId);
+            .FirstOrDefaultAsync(e => e.CourseId == courseId && e.UserId == userId);
 
         if (existingEnrollment != null)
             throw new InvalidOperationException("Student is already enrolled in this course");
@@ -129,7 +125,7 @@ public class CourseService : ICourseService
         var enrollment = new Enrollment
         {
             CourseId = courseId,
-            UserId = studentId
+            UserId = userId
         };
 
         _context.Enrollments.Add(enrollment);
@@ -142,7 +138,6 @@ public class CourseService : ICourseService
     public async Task<IEnumerable<CourseViewModel>> GetPopularCoursesAsync(int top)
     {
         return await _context.Courses
-            .Include(c => c.CreatedByUser)
             .Include(c => c.Enrollments)
             .Include(c => c.Lessons)
             .OrderByDescending(c => c.Enrollments.Count)
@@ -153,7 +148,6 @@ public class CourseService : ICourseService
                 Title = c.Title,
                 Description = c.Description,
                 CreatedByUserId = c.CreatedByUserId,
-                CreatedByUserName = c.CreatedByUser.Name,
                 CreatedAt = c.CreatedAt,
                 LessonCount = c.Lessons.Count,
                 EnrolledStudentCount = c.Enrollments.Count

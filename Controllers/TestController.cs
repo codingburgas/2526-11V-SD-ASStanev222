@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectLMS.Models.ViewModels;
 using ProjectLMS.Services.Interfaces;
+using System.Security.Claims;
 
 namespace ProjectLMS.Controllers;
 
@@ -174,10 +175,14 @@ public class TestController : Controller
     {
         try
         {
-            // TODO: Get current student ID from authentication
-            int studentId = 2; // Temporary: Student user
+            // Get current user ID from authentication
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-            var test = await _testService.GetTestForStudentAsync(id, studentId);
+            var test = await _testService.GetTestForStudentAsync(id, userId);
             return View(test);
         }
         catch (UnauthorizedAccessException)
@@ -201,10 +206,14 @@ public class TestController : Controller
     {
         try
         {
-            // TODO: Get current student ID from authentication
-            int studentId = 2; // Temporary: Student user
+            // Get current user ID from authentication
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-            var (score, grade, studentAnswers) = await _testService.SubmitTestAsync(id, studentId, answers);
+            var (score, grade, studentAnswers) = await _testService.SubmitTestAsync(id, userId, answers);
 
             var resultViewModel = new TestResultViewModel
             {

@@ -10,6 +10,6 @@ public interface ITestService
     Task CreateTestAsync(TestViewModel test);
     Task UpdateTestAsync(TestViewModel test);
     Task DeleteTestAsync(int id);
-    Task<TestViewModel> GetTestForStudentAsync(int testId, int studentId);
-    Task<(int score, int grade, IEnumerable<StudentAnswerViewModel> answers)> SubmitTestAsync(int testId, int studentId, IReadOnlyDictionary<int, int> selectedAnswerIds);
+    Task<TestViewModel> GetTestForStudentAsync(int testId, string userId);
+    Task<(int score, int grade, IEnumerable<StudentAnswerViewModel> answers)> SubmitTestAsync(int testId, string userId, IReadOnlyDictionary<int, int> selectedAnswerIds);
 }

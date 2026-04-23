@@ -18,8 +18,7 @@ public class CourseViewModel
     [StringLength(1000)]
     public string Description { get; set; }
 
-    public int CreatedByUserId { get; set; }
-    public string CreatedByUserName { get; set; }
+    public string CreatedByUserId { get; set; }
     public DateTime CreatedAt { get; set; }
 
     public int LessonCount { get; set; }

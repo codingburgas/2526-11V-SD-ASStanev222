@@ -1,0 +1,49 @@
+@model ProjectLMS.Models.ViewModels.LessonViewModel
+@{
+    ViewData["Title"] = "Lesson Details - " + Model.Title;
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Index">Courses</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Details" asp-route-id="@Model.CourseId">@Model.CourseName</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Lesson" asp-action="Index" asp-route-courseId="@Model.CourseId">Lessons</a></li>
+                <li class="breadcrumb-item active">@Model.Title</li>
+            </ol>
+        </nav>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1 class="h4 mb-0">@Model.Title</h1>
+                <div>
+                    <a asp-controller="Lesson" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                    <a asp-controller="Lesson" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <h5>Lesson Content</h5>
+                    <div class="border p-3 rounded bg-light">
+                        @Html.Raw(Model.Content?.Replace("\n", "<br>") ?? "No content available.")
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Course:</strong> @Model.CourseName
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Order:</strong> @Model.Order
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a asp-controller="Lesson" asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-outline-secondary">Back to Lessons</a>
+            <a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-outline-success ms-2">View Course Tests</a>
+        </div>
+    </div>
+</div>

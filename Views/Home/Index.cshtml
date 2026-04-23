@@ -1,0 +1,95 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- Hero Section -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-3">Welcome to ProjectLMS</h1>
+                <p class="lead mb-4">
+                    Your comprehensive Learning Management System built with ASP.NET Core MVC.
+                    Empowering education through modern technology and seamless user experience.
+                </p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a asp-controller="Course" asp-action="Index" class="btn btn-light btn-lg">
+                        <i class="bi bi-book me-2"></i>Browse Courses
+                    </a>
+                    <a asp-controller="Statistics" asp-action="Index" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-graph-up me-2"></i>View Statistics
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <i class="bi bi-mortarboard-fill display-1 text-white-50"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold text-primary mb-3">Platform Features</h2>
+                <p class="lead text-muted">Everything you need for modern online learning</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-primary text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                            <i class="bi bi-book-half fs-4"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Course Management</h5>
+                        <p class="card-text text-muted">Create and manage comprehensive courses with structured lessons and content.</p>
+                        <a asp-controller="Course" asp-action="Index" class="btn btn-primary">Explore Courses</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-success text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                            <i class="bi bi-check2-circle fs-4"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Automated Testing</h5>
+                        <p class="card-text text-muted">Take interactive tests with automatic grading on a 2-6 scale system.</p>
+                        <a asp-controller="Course" asp-action="Index" class="btn btn-success">Start Testing</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-info text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                            <i class="bi bi-graph-up fs-4"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Progress Tracking</h5>
+                        <p class="card-text text-muted">Monitor student performance, completion rates, and detailed statistics.</p>
+                        <a asp-controller="Statistics" asp-action="Index" class="btn btn-info">View Progress</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="feature-icon bg-warning text-white rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                            <i class="bi bi-shield-check fs-4"></i>
+                        </div>
+                        <h5 class="card-title fw-bold">Role-Based Access</h5>
+                        <p class="card-text text-muted">Secure system supporting Teachers, Students, and Administrators.</p>
+                        <a asp-controller="Home" asp-action="About" class="btn btn-warning">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

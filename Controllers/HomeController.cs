@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectLMS.Services.Interfaces;
+using System.Collections.Generic;
+using ProjectLMS.Models.ViewModels;
+using System.Linq;
 
 namespace ProjectLMS.Controllers;
 
@@ -19,10 +22,9 @@ public class HomeController : Controller
     /// GET: /
     /// Displays the home page with system overview.
     /// </summary>
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        var popularCourses = await _statisticsService.GetCoursesWithMostEnrollmentsAsync(3);
-        return View(popularCourses);
+        return View();
     }
 
     /// <summary>

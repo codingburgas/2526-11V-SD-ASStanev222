@@ -128,7 +128,7 @@ public class TestService : ITestService
     /// <summary>
     /// Gets a test for a student to take (without correct answers).
     /// </summary>
-    public async Task<TestViewModel> GetTestForStudentAsync(int testId, int studentId)
+    public async Task<TestViewModel> GetTestForStudentAsync(int testId, string userId)
     {
         var test = await _context.Tests
             .Include(t => t.Course)
@@ -141,7 +141,7 @@ public class TestService : ITestService
 
         // Check if student is enrolled in the course
         var isEnrolled = await _context.Enrollments
-            .AnyAsync(e => e.CourseId == test.CourseId && e.UserId == studentId);
+            .AnyAsync(e => e.CourseId == test.CourseId && e.UserId == userId);
 
         if (!isEnrolled)
             throw new UnauthorizedAccessException("Student is not enrolled in this course");
@@ -176,7 +176,7 @@ public class TestService : ITestService
     /// Submits a test attempt and calculates the score.
     /// </summary>
     public async Task<(int score, int grade, IEnumerable<StudentAnswerViewModel> answers)> SubmitTestAsync(
-        int testId, int studentId, IReadOnlyDictionary<int, int> selectedAnswerIds)
+        int testId, string userId, IReadOnlyDictionary<int, int> selectedAnswerIds)
     {
         var test = await _context.Tests
             .Include(t => t.Questions)
@@ -189,7 +189,7 @@ public class TestService : ITestService
         // Create test attempt record
         var attempt = new StudentTestAttempt
         {
-            UserId = studentId,
+            UserId = userId,
             TestId = testId,
             Score = 0 // Will be calculated
         };

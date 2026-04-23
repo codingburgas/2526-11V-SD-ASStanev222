@@ -46,12 +46,12 @@ public class StatisticsController : Controller
     }
 
     /// <summary>
-    /// GET: /Statistics/Student/{studentId}
+    /// GET: /Statistics/Student/{userId}
     /// Displays statistics for a specific student.
     /// </summary>
-    public async Task<IActionResult> Student(int studentId)
+    public async Task<IActionResult> Student(string userId)
     {
-        var studentStats = await _statisticsService.GetStudentProgressAsync(studentId);
+        var studentStats = await _statisticsService.GetStudentProgressAsync(userId);
         if (studentStats == null)
             return NotFound();
 
