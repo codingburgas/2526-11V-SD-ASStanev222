@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ProjectLMS.Models.ViewModels;
 using ProjectLMS.Services.Interfaces;
 using System.Security.Claims;
@@ -9,6 +10,7 @@ namespace ProjectLMS.Controllers;
 /// Controller for course management operations.
 /// Handles CRUD operations for courses, enrollment, and course listing.
 /// </summary>
+[AllowAnonymous]
 public class CourseController : Controller
 {
     private readonly ICourseService _courseService;

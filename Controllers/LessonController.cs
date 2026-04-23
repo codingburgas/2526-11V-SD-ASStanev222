@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ProjectLMS.Models.ViewModels;
 using ProjectLMS.Services.Interfaces;
 
@@ -8,6 +9,7 @@ namespace ProjectLMS.Controllers;
 /// Controller for lesson management operations.
 /// Handles CRUD operations for lessons within courses.
 /// </summary>
+[AllowAnonymous]
 public class LessonController : Controller
 {
     private readonly ILessonService _lessonService;

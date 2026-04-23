@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ProjectLMS.Services.Interfaces;
 
 namespace ProjectLMS.Controllers;
@@ -7,6 +8,7 @@ namespace ProjectLMS.Controllers;
 /// Controller for statistics and reporting operations.
 /// Provides various statistical views and reports for the LMS.
 /// </summary>
+[AllowAnonymous]
 public class StatisticsController : Controller
 {
     private readonly IStatisticsService _statisticsService;

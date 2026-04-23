@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ProjectLMS.Models.ViewModels;
 
 namespace ProjectLMS.Controllers;
@@ -7,6 +8,7 @@ namespace ProjectLMS.Controllers;
 /// <summary>
 /// Controller for user account management (login, register, logout).
 /// </summary>
+[AllowAnonymous]
 public class AccountController : Controller
 {
     private readonly SignInManager<IdentityUser> _signInManager;

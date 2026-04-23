@@ -32,6 +32,9 @@ builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<IStatisticsService, StatisticsService>();
 
+// Add Authorization
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
 // Create database and apply migrations

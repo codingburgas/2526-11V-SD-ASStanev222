@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ProjectLMS.Services.Interfaces;
 using System.Collections.Generic;
 using ProjectLMS.Models.ViewModels;
@@ -9,6 +10,7 @@ namespace ProjectLMS.Controllers;
 /// <summary>
 /// Controller for the home page and general navigation.
 /// </summary>
+[AllowAnonymous]
 public class HomeController : Controller
 {
     private readonly IStatisticsService _statisticsService;

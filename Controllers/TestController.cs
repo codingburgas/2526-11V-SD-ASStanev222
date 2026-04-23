@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ProjectLMS.Models.ViewModels;
 using ProjectLMS.Services.Interfaces;
 using System.Security.Claims;
@@ -9,6 +10,7 @@ namespace ProjectLMS.Controllers;
 /// Controller for test management and test-taking operations.
 /// Handles CRUD for tests and student test attempts.
 /// </summary>
+[AllowAnonymous]
 public class TestController : Controller
 {
     private readonly ITestService _testService;
