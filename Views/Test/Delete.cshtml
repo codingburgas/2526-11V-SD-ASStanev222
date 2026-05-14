@@ -1,0 +1,42 @@
+@model ProjectLMS.Models.ViewModels.TestViewModel
+@{
+    ViewData["Title"] = "Delete Test";
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Index">Courses</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Details" asp-route-id="@Model.CourseId">@Model.CourseName</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.CourseId">Tests</a></li>
+                <li class="breadcrumb-item active">Delete Test</li>
+            </ol>
+        </nav>
+
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h1 class="h4 mb-0">Delete Test</h1>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <strong>Warning:</strong> This action cannot be undone.
+                </div>
+
+                <h4>@Model.Title</h4>
+                <p>@Model.Description</p>
+                <p><strong>Passing score:</strong> @Model.PassingScore%</p>
+
+                <form asp-action="Delete" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

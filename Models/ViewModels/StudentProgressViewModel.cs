@@ -50,6 +50,7 @@ public class TestResultViewModel
 {
     public int TestAttemptId { get; set; }
     public int TestId { get; set; }
+    public int CourseId { get; set; }
     public string TestName { get; set; }
     public int Score { get; set; }
     public int Grade { get; set; }

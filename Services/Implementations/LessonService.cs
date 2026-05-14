@@ -44,14 +44,14 @@ public class LessonService : ILessonService
     /// <summary>
     /// Retrieves a specific lesson by ID.
     /// </summary>
-    public async Task<LessonViewModel> GetLessonByIdAsync(int id)
+    public async Task<LessonViewModel?> GetLessonByIdAsync(int id)
     {
         var lesson = await _context.Lessons
             .Include(l => l.Course)
             .FirstOrDefaultAsync(l => l.Id == id);
 
         if (lesson == null)
-            throw new InvalidOperationException("Lesson not found.");
+            return null;
 
         return new LessonViewModel
         {

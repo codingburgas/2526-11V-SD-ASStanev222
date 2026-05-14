@@ -1,3 +1,4 @@
+@using System.Security.Claims
 @using ProjectLMS.Models.ViewModels
 @model IEnumerable<CourseViewModel>
 
@@ -55,7 +56,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a asp-controller="Statistics" asp-action="Course" asp-route-id="@course.Id" class="btn btn-primary mt-auto">
+                            <a asp-controller="Statistics" asp-action="Course" asp-route-courseId="@course.Id" class="btn btn-primary mt-auto">
                                 <i class="bi bi-bar-chart me-2"></i>View Statistics
                             </a>
                         </div>
@@ -81,9 +82,18 @@
                     </div>
                     <h5 class="card-title fw-bold">Student Progress</h5>
                     <p class="card-text text-muted">View individual student progress and performance metrics.</p>
-                    <a asp-controller="Statistics" asp-action="Student" asp-route-id="2" class="btn btn-success">
-                        <i class="bi bi-person-check me-2"></i>My Progress
-                    </a>
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="Statistics" asp-action="Student" asp-route-userId="@User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier)" class="btn btn-success">
+                            <i class="bi bi-person-check me-2"></i>My Progress
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-success">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Login to view progress
+                        </a>
+                    }
                 </div>
             </div>
         </div>

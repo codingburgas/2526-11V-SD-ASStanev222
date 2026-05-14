@@ -42,7 +42,7 @@
                             </small>
                             <div class="d-flex gap-2">
                                 <a asp-controller="Course" asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary btn-sm">View Course</a>
-                                <a asp-controller="Statistics" asp-action="Course" asp-route-id="@course.Id" class="btn btn-outline-info btn-sm">Statistics</a>
+                                <a asp-controller="Statistics" asp-action="Course" asp-route-courseId="@course.Id" class="btn btn-outline-info btn-sm">Statistics</a>
                             </div>
                         </div>
                     </div>

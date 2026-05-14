@@ -43,7 +43,7 @@ public class TestService : ITestService
     /// <summary>
     /// Retrieves a specific test by ID.
     /// </summary>
-    public async Task<TestViewModel> GetTestByIdAsync(int id)
+    public async Task<TestViewModel?> GetTestByIdAsync(int id)
     {
         var test = await _context.Tests
             .Include(t => t.Course)
@@ -52,7 +52,7 @@ public class TestService : ITestService
             .FirstOrDefaultAsync(t => t.Id == id);
 
         if (test == null)
-            throw new InvalidOperationException("Test not found.");
+            return null;
 
         return new TestViewModel
         {

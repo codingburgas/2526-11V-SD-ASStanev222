@@ -6,7 +6,7 @@ namespace ProjectLMS.Services.Interfaces;
 public interface ICourseService
 {
     Task<IEnumerable<CourseViewModel>> GetAllCoursesAsync();
-    Task<CourseViewModel> GetCourseByIdAsync(int id);
+    Task<CourseViewModel?> GetCourseByIdAsync(int id);
     Task CreateCourseAsync(CourseViewModel course);
     Task UpdateCourseAsync(CourseViewModel course);
     Task DeleteCourseAsync(int id);

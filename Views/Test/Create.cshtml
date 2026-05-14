@@ -1,0 +1,52 @@
+@model ProjectLMS.Models.ViewModels.TestViewModel
+@{
+    ViewData["Title"] = "Create Test";
+}
+
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Index">Courses</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Details" asp-route-id="@Model.CourseId">@Model.CourseName</a></li>
+                <li class="breadcrumb-item active">Create Test</li>
+            </ol>
+        </nav>
+
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h4 mb-0">Create New Test</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="CourseId" />
+
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PassingScore" class="form-label"></label>
+                        <input asp-for="PassingScore" class="form-control" min="1" max="100" />
+                        <span asp-validation-for="PassingScore" class="text-danger"></span>
+                        <div class="form-text">Minimal passing percentage for this test.</div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Create Test</button>
+                        <a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

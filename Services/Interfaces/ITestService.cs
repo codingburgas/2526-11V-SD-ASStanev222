@@ -6,7 +6,7 @@ namespace ProjectLMS.Services.Interfaces;
 public interface ITestService
 {
     Task<IEnumerable<TestViewModel>> GetTestsByCourseAsync(int courseId);
-    Task<TestViewModel> GetTestByIdAsync(int id);
+    Task<TestViewModel?> GetTestByIdAsync(int id);
     Task CreateTestAsync(TestViewModel test);
     Task UpdateTestAsync(TestViewModel test);
     Task DeleteTestAsync(int id);

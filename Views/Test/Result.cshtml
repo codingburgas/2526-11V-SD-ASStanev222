@@ -1,3 +1,4 @@
+@using System.Security.Claims
 @model ProjectLMS.Models.ViewModels.TestResultViewModel
 @{
     ViewData["Title"] = "Test Results";
@@ -70,8 +71,8 @@
                 }
 
                 <div class="d-flex gap-2 justify-content-center mt-4">
-                    <a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.TestId" class="btn btn-primary">Back to Tests</a>
-                    <a asp-controller="Statistics" asp-action="Student" asp-route-id="2" class="btn btn-outline-info">View My Progress</a>
+                    <a asp-controller="Test" asp-action="Index" asp-route-courseId="@Model.CourseId" class="btn btn-primary">Back to Tests</a>
+                    <a asp-controller="Statistics" asp-action="Student" asp-route-userId="@User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier)" class="btn btn-outline-info">View My Progress</a>
                 </div>
             </div>
         </div>

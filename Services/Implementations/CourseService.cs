@@ -43,7 +43,7 @@ public class CourseService : ICourseService
     /// <summary>
     /// Retrieves a specific course by ID with full details.
     /// </summary>
-    public async Task<CourseViewModel> GetCourseByIdAsync(int id)
+    public async Task<CourseViewModel?> GetCourseByIdAsync(int id)
     {
         var course = await _context.Courses
             .Include(c => c.Enrollments)
@@ -52,7 +52,7 @@ public class CourseService : ICourseService
             .FirstOrDefaultAsync(c => c.Id == id);
 
         if (course == null)
-            throw new InvalidOperationException("Course not found.");
+            return null;
 
         return new CourseViewModel
         {

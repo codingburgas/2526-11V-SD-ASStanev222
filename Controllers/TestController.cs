@@ -215,14 +215,20 @@ public class TestController : Controller
                 return RedirectToAction("Login", "Account");
             }
 
+            var test = await _testService.GetTestByIdAsync(id);
             var (score, grade, studentAnswers) = await _testService.SubmitTestAsync(id, userId, answers);
 
             var resultViewModel = new TestResultViewModel
             {
                 TestId = id,
-                Score = (int)Math.Round((double)score), // Convert to int for existing model
+                CourseId = test?.CourseId ?? 0,
+                TestName = test?.Title ?? "Test",
+                Score = (int)Math.Round((double)score),
                 Grade = grade,
-                IsPassed = score >= 50, // Default passing score
+                IsPassed = score >= (test?.PassingScore ?? 50),
+                Feedback = score >= (test?.PassingScore ?? 50)
+                    ? "Great job! Review the course materials and continue learning."
+                    : "You can improve by reviewing the lessons and trying again.",
                 AttemptedAt = DateTime.UtcNow
             };
 
